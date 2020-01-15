@@ -1,6 +1,6 @@
 {
   "name": "bubble-serv",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Express middleware for fast prototyping JSON server (JSON-based REST api). Mainly intended for mock servers, tests, prototypes.",
   "main": "index.js",
   "scripts": {

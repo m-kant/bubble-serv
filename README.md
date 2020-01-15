@@ -188,4 +188,4 @@ Some additional data:
 
 ## Sample API
 
-How to create sample API is described in [sample.md](./sample.md)
+How to create sample API is described in [sample.md](https://github.com/m-kant/bubble-serv/blob/master/sample.md)

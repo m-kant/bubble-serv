@@ -40,7 +40,7 @@ module.exports = new ArrayQL(users, options);
 
 ## Read methods
 
-Create `api/user/index.get.js` file, it will be served for all `GET /user` requests
+Create `api/user/index.get.js` file, it will be served for all `GET /user/...` requests
 
 ```javascript
 const UsersDB = require("./users-db");
@@ -54,7 +54,7 @@ module.exports = function ({ queryParams, pathParams }) {
     const user = UsersDB.getById(id);
 
     // if prop given (/user/:id/:prop) return just particular prop
-    // Have to encode strings/udefined as a JSON
+    // Have to encode strings as a JSON
     return prop ? JSON.stringify(user[prop]) : user;
   }
 
@@ -109,4 +109,4 @@ module.exports = function ({ pathParams }) {
 
 ## Conclusion
 
-That's it! It takes about 5-15 minutes to create full-weight CRUD API even with search. Files are located in `demo/` folder. Run `demo/app.js`, then go to browser and go to `http://localhost:3000/demo`, if everything is ok, you will see series of request to API with received responses.
+That's it! It takes about 15 minutes and 60 lines of code to create full-weight CRUD API even with search. Files are located in `demo/` folder. Run `demo/app.js`, then go to browser and go to `http://localhost:3000/demo`, if everything is ok, you will see series of request to API with received responses.

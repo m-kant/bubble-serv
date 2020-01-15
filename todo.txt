@@ -1,0 +1,4 @@
+make asynchronous delays
+options.delay
+
+add typings

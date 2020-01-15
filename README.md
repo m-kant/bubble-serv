@@ -2,13 +2,15 @@
 
 Express middleware for fast prototyping JSON server (JSON-based REST api). Mainly intended for mock servers, tests, prototypes.
 
-Just put `authorized.json` file into `user/` folder, and you will get `user/authorized` method in your API wich returns content of file. Add `authorized.post.json` for separate response on POST request. You can use `.js` instead of `.json` for more complex response, if you want take into consideration query params, body content or path params.
+Just put `authorized.json` file into `user/` folder, and you will get `user/authorized` method in your API, wich returns content of file. Add `authorized.post.json` for separate response on POST request. You can use `.js` instead of `.json` for more complex response, in case you want to take into consideration query params, body content or path params.
 
 ## Installation
 
 ```Bash
-npm install bubble-serv
+npm install bubble-serv chalk
 ```
+
+[chalk](https://www.npmjs.com/package/chalk) is a peer npm dependency for colorize log
 
 ## Usage
 
@@ -18,6 +20,7 @@ var app = express();
 var bodyParser = require('body-parser'); // is not a part of this bundle
 var bubbleServ = require("bubble-serv");
 
+// if body params will be used
 app.use(bodyParser.json());
 
 app.use( bubbleServ({apiRoot: "api-files",}) );
@@ -57,7 +60,7 @@ To handle request parameters you have to export callback function from your .js 
 
 ```JavaScript
 module.exports = function(context, request, response){
-    return JSON.stringify({...context});
+    return {...context}; // response content, sent to browser
 }
 ```
 
@@ -152,6 +155,12 @@ Some additional data:
         <td>Prefix for console messages. If NULL or empty string, no messages will be printed to console</td>
     </tr>
     <tr>
+        <td>traceScriptResolving</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>If traceLabel is set, and traceScriptResolving=TRUE, then details of working script searhing will be printed to console</td>
+    </tr>
+    <tr>
         <td>extractPath</td>
         <td>function(req) => string</td>
         <td>null</td>
@@ -176,3 +185,7 @@ Some additional data:
         <td>Format response function. Default is pure result (content of file) in JSON format. Useful for common wrappers, transports as JSON-RPC 2.0 wrapper</td>
     </tr>
 </table>
+
+## Sample API
+
+How to create sample API is described in [sample.md](./sample.md)

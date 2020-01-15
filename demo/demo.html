@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>REST test</title>
+
+    <style>
+        .container{ max-width: 800px; margin: auto; padding: 20px;}
+        .code{ background-color: #eee; padding: 5px; margin-bottom: 20px;}
+    </style>
+
+    <script>
+        function req(url, data, httpMethod){
+            const method = httpMethod || "GET";
+            const options = {
+                method,
+                headers: { "Content-Type": "application/json;charset=UTF-8" },
+                body:    data? JSON.stringify(data) : undefined
+            }
+            return fetch(url, options)
+                .then(res => res.json())
+                .then(res => printResponse(method, url, res));
+        }
+        function printResponse(method, name, data) {
+            const msg = `<div>${method} ${name}<div class="code">${JSON.stringify(data, null, " ")}</div></div>`;
+            app.innerHTML += msg;
+			return data;
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="app" class="container"></div>
+
+    <script>
+		let newUserId;
+		
+        req('/user')
+            .then(() => req('/user/5'))
+            .then(() => req('/user/5/name'))
+            .then(() => req('/user/FAKE'))
+            .then(() => req('/user?search=grif'))
+            .then(() => req('/user', {firstName: "Roberta", lastName: "Olden"}, "PUT"))
+			.then(user => newUserId = user.id)
+            .then(() => req('/user', {age: 21}, "POST"))
+            .then(() => req('/user/' + newUserId, {age: 21, gender:"female"}, "POST"))
+            .then(() => req('/user/', null, "DELETE"))
+            .then(() => req('/user/' + newUserId, null, "DELETE"))
+            .then(() => req('/user/'));
+    </script>
+</body>
+
+</html>

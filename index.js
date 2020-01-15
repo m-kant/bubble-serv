@@ -16,6 +16,7 @@ function JservFactory(options){
 		numerizeGetParams: false,
 		numerizePathParams: false,
 		traceLabel: "BUBBLE SERV",
+		traceScriptResolving: false,
 		cors: false,
 		apiRoot: "./", // relative project root
 		extractPath: null,
@@ -43,7 +44,7 @@ function JservFactory(options){
 			// path to script fetched from request
 			req.bubbleServ.requestedPath = options.extractPath ? options.extractPath(req) : _extractPath(req);
 			// resolve abs path to script and fetch path params
-			resolvePath(req);
+			resolvePath(req, options);
 			if (options.numerizePathParams) req.bubbleServ.pathParams = numerize(req.bubbleServ.pathParams);
 			if (options.traceLabel) console.log(chalk.gray(options.traceLabel + ` ${req.method} RESOLVED TO: ${req.bubbleServ.resolvedScript}`));
 			

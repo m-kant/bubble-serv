@@ -37,22 +37,27 @@ Add prefix to file extension with http method name in lower case, and file will 
 
 ## Resolving file path
 
-When bubble-serv gets request `POST user/info` it try to find file by following sequence:
+When bubble-serv gets request `POST user/info` it try to find file by following sequence (similar to node "require" algorithm):
 
-1. `user/info/index.post.js`
-1. `user/info/index.post.json`
+first with ".post" prefix by standard "node" sequence
+
+1. `user/info/index.post.js` first with ".post" prefix
+1. `user/info/index.post.json` .js has priority to .json
 1. `user/info.post.js`
 1. `user/info.post.json`
-1. `user/info/index.js`
+
+then without prefix
+
+5. `user/info/index.js` the same, but without ".post" prefix
 1. `user/info/index.json`
 1. `user/info.js`
 1. `user/info.json`
 
 ## Bubbling
 
-If nothing is found it bubbles up in folder tree. It creates path param `"info"` and goes up to folder `user/`, trying to find `user/index.post.js` with regular algorythm, etc.
+If nothing is found it bubbles up in folder tree. It creates path param `"info"` and goes up to folder `user/`, trying to find `user/index.post.js` with regular algorithm, etc.
 
-Thus, if we have one file `index.js` in folder `user`, all request like `user/id/some-params/and-more` will be delegated to this `user/index.js`. Bubble-serv generates `pathParams` for it: `["id", "some-params", "and-more"]`.
+Thus, if we have one file `index.js` in folder `user`, all request like `user/id/some-params/and-more` will be delegated to this `user/index.js`. Bubble-serv will generates `pathParams` for it: `["id", "some-params", "and-more"]` during bubbling.
 
 ## Using .js file to handle params. Context
 
@@ -180,7 +185,7 @@ Some additional data:
     </tr>
     <tr>
         <td>mapResult:</td>
-        <td>function(result, req, res)</td>
+        <td>function(result, req, res) => any</td>
         <td>null</td>
         <td>Format response function. Default is pure result (content of file) in JSON format. Useful for common wrappers, transports as JSON-RPC 2.0 wrapper</td>
     </tr>

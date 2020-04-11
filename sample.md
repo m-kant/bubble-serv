@@ -26,7 +26,7 @@ const users = [
 ];
 
 options = {
-  // applyed to new and existing records, for exmple age=null will be added to "Sondra"
+  // applyed to new and existing records, for exmple, age=null will be added to "Sondra"
   default: { firstName: null, lastName: null, gender: null, age: null },
   getters: {
     // getter for field "name"
@@ -58,7 +58,7 @@ module.exports = function ({ queryParams, pathParams }) {
     return prop ? JSON.stringify(user[prop]) : user;
   }
 
-  // list is requested (/user)
+  // no "id" and "prop" given, then list is requested (/user)
   // if queryParams.search is undefined
   // complete list will be returned
   return UsersDB.select().where("lastName").like(queryParams.search).getList();  
@@ -109,4 +109,4 @@ module.exports = function ({ pathParams }) {
 
 ## Conclusion
 
-That's it! It takes about 15 minutes and 60 lines of code to create full-weight CRUD API even with search. Files are located in `demo/` folder. Run `demo/app.js`, then go to browser and go to `http://localhost:3000/demo`, if everything is ok, you will see series of request to API with received responses.
+That's it! It takes about 15 minutes and 60 lines of code to create full-weight CRUD API even with search. Described files are located in `demo/` folder. Run `demo/app.js`, then go to browser and go to `http://localhost:3000/demo`, if everything is ok, you will see series of request to API with received responses.

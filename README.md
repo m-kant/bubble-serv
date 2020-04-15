@@ -194,3 +194,8 @@ Some additional data:
 ## Sample API
 
 How to create sample API is described in [sample.md](https://github.com/m-kant/bubble-serv/blob/master/sample.md)
+
+
+## CORS (net::ERR_CONNECTION_REFUSED)
+
+With Javascript in browser, when your script tries to fetch API from another domain, you can get connection error. This situation is called *[Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)*. Server have to send specific http headers to allow browser to read API. The best way is to **use additional express middleware, such as [cors](https://www.npmjs.com/package/cors)**.

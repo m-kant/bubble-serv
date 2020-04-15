@@ -12,6 +12,39 @@ Let's create test REST API for manipulate list of users.
 
 Create in project root folder `api` for all api files. Create subfolder `user` for api-files related to users.
 
+## Express App
+
+In root of project create folder `api` to store files of API, and create file `app.js` for express application: 
+
+```javascript
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const bubbleServ = require("bubble-serv");
+
+// parse data from body of POST, PUT... requests
+app.use(bodyParser.json());
+
+// configure BubbleServ
+app.use(
+  bubbleServ({
+    // location of API files according to project root
+    apiRoot: "api",
+	  // show in console files serving requests
+    traceScriptResolving: false,
+    // convert numerical strings to numbers
+    numerizeGetParams: true,
+    // convert numerical strings to numbers
+    numerizePathParams: true,
+  })
+);
+
+// START server
+app.listen(3000, function () {
+  console.log(`listening http://localhost:3000`);
+});
+```
+
 ## Users DB
 
 To simulate DB let's install [array-ql](https://www.npmjs.com/package/array-ql) package. Then create file `api/user/users-db.js`:
@@ -105,6 +138,14 @@ module.exports = function ({ pathParams }) {
 
   return UsersDB.delete([id]);
 };
+```
+
+## Start app
+
+Execute in command line:
+
+```bash
+node app.js
 ```
 
 ## Conclusion

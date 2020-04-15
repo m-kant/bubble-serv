@@ -5,11 +5,11 @@
  */
 const url = require("url");
 const chalk = require("chalk");
-const numerize = require("./utils/numerize");
+const numerize = require("./numerize");
 
 const ProjRoot = process.cwd() + "/";
 // const setCorsHeaders = require("./utils/set-cors-headers");
-const resolvePath = require("./utils/resolve-path");
+const resolvePath = require("./resolve-path");
 
 function JservFactory(options){
 	options = Object.assign({

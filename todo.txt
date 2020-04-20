@@ -1,3 +1,5 @@
+rename getResult to getPaged/getPage
+
 document 
 		numerizeGetParams: false,
 		numerizePathParams: false,

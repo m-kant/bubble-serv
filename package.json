@@ -2,7 +2,7 @@
   "name": "bubble-serv",
   "version": "0.2.1",
   "description": "Express middleware for fast prototyping JSON server (JSON-based REST api). Mainly intended for mock servers, tests, prototypes.",
-  "main": "index.js",
+  "main": "middleware/index.js",
   "scripts": {
     "start": "node demo/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

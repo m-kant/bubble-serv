@@ -10,7 +10,7 @@ Let's create test REST API for manipulate list of users.
 - `PUT api/user/:id` to update user
 - `DELETE api/user/:id` to delete user
 
-Create in project root folder `api` for all api files. Create subfolder `user` for api-files related to users.
+Create in project root folder `api-files` for all api files. Create subfolder `user` for api-files related to users.
 
 ## Express App
 
@@ -25,12 +25,15 @@ const app = express();
 // POST data parsing
 app.use(bodyParser.json());
 
-app.use(
-  '/api',
+app.use( "/api",
   bubbleServ({
+    // location of API files according to project root
     apiRoot: "/api-files",
+    // show in console serving file path for every request
     traceScriptResolving: false,
+    // convert numerical strings to numbers
     numerizeGetParams: true,
+    // convert numerical strings to numbers
     numerizePathParams: true,
   })
 );
@@ -39,7 +42,6 @@ app.use(
 app.listen(3000, function () {
   console.log(`listening http://localhost:3000`);
 });
-
 ```
 
 ## Users DB
@@ -52,8 +54,8 @@ const ArrayQL = require("array-ql");
 
 // sample db
 const users = [
-    { id: 1, firstName: "Clyde", lastName: "Griffiths", gender: "male", age: 24 },
-    { id: 5, firstName: "Sondra", lastName: "Finchley", gender: "female" }
+  { id: 1, firstName: "Clyde", lastName: "Griffiths", gender: "male", age: 24 },
+  { id: 5, firstName: "Sondra", lastName: "Finchley", gender: "female" },
 ];
 
 options = {
@@ -61,8 +63,8 @@ options = {
   default: { firstName: null, lastName: null, gender: null, age: null },
   getters: {
     // getter for field "name"
-    name: (row) => `${row.firstName} ${row.lastName}`
-  }
+    name: (row) => `${row.firstName} ${row.lastName}`,
+  },
 };
 
 // export ArrayQL instance
@@ -92,7 +94,7 @@ module.exports = function ({ queryParams, pathParams }) {
   // no "id" and "prop" given, then list is requested (api/user)
   // if queryParams.search is undefined
   // complete list will be returned
-  return UsersDB.select().where("lastName").like(queryParams.search).getList();  
+  return UsersDB.select().where("lastName").like(queryParams.search).getList();
 };
 ```
 
@@ -119,9 +121,9 @@ const UsersDB = require("./users-db");
 
 module.exports = function ({ pathParams, bodyParams }) {
   const [id] = pathParams; // destructuring id from array
-  if(id === undefined) throw new Error ("No id specified");
-  
-  return UsersDB.update({id, ...bodyParams});
+  if (id === undefined) throw new Error("No id specified");
+
+  return UsersDB.update({ id, ...bodyParams });
 };
 ```
 
@@ -135,12 +137,20 @@ const UsersDB = require("./users-db");
 
 module.exports = function ({ pathParams }) {
   const [id] = pathParams;
-  if(id === undefined) throw new Error("No id specified");
+  if (id === undefined) throw new Error("No id specified");
 
   return UsersDB.delete([id]);
 };
 ```
 
+## Start app
+
+Execute in command line:
+
+```bash
+node app.js
+```
+
 ## Conclusion
 
-That's it! It takes about 15 minutes and 60 lines of code to create full-weight CRUD API even with search. Described files are located in `demo/` folder. Run `demo/app.js`, then go to browser and go to `http://localhost:3000/demo`, if everything is ok, you will see series of request to API with received responses.
+That's it! It takes about 15 minutes and 60 lines of code to create full-weight CRUD API even with search. Described files are located in `demo/` folder. Run `node demo/app.js`, then go to browser and go to `http://localhost:3000/`, if everything is ok, you will see series of request to API with received responses.

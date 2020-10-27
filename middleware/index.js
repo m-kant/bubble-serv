@@ -7,10 +7,10 @@ const url = require("url");
 const path = require("path");
 const chalk = require("chalk");
 const appRoot = require('app-root-path');
-const numerize = require("./utils/numerize");
+const numerize = require("./numerize");
 
 // const setCorsHeaders = require("./utils/set-cors-headers");
-const resolvePath = require("./utils/resolve-path");
+const resolvePath = require("./resolve-path");
 
 function BservFactory(options){
 	options = Object.assign({

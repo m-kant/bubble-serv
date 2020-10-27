@@ -1,6 +1,4 @@
-document 
-		numerizeGetParams: false,
-		numerizePathParams: false,
+# TODO
 
 - migrate demo to traceFetch
 - make asynchronous delays options.delay

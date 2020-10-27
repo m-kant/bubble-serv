@@ -1,6 +1,6 @@
 {
   "name": "bubble-serv",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Express middleware for fast prototyping JSON server (JSON-based REST api). Mainly intended for mock servers, tests, prototypes.",
   "main": "index.js",
   "scripts": {
@@ -17,14 +17,15 @@
     "prototype",
     "easy"
   ],
-  "author": "mkant",
+  "author": "mkant@list.ru",
   "license": "MIT",
-  "devDependencies": {
-    "array-ql": "^0.1.5",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "chalk": "^4.1.0"
   },
-  "peerDependencies": {
-    "chalk": "^3.0.0"
+  "devDependencies": {
+    "array-ql": "^0.2.0",
+    "express": "^4.17.1"
   }
 }

@@ -10,8 +10,6 @@ Just put `authorized.json` file into `user/` folder, and you will get `user/auth
 npm install bubble-serv chalk
 ```
 
-[chalk](https://www.npmjs.com/package/chalk) is a peer npm dependency for colorize log
-
 ## Usage
 
 ```JavaScript
@@ -23,13 +21,13 @@ var bubbleServ = require("bubble-serv");
 // if body params will be used
 app.use(bodyParser.json());
 
-app.use( bubbleServ({apiRoot: "api-files",}) );
+app.use( '/api', bubbleServ({apiRoot: "api-files",}) );
 
 // start server
 app.listen(3000);
 ```
 
-Put file `info.json` into `api-files/` folder. Open with browser URI: `localhost:3000/info` - you will get content of `info.json`.
+Put file `info.json` into `api-files/` folder. Open with browser URI: `localhost:3000/api/info` - you will get content of `info.json`.
 
 ## POST, PUT, etc
 

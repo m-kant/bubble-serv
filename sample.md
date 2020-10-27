@@ -2,21 +2,52 @@
 
 Let's create test REST API for manipulate list of users.
 
-- `GET /user` to get list of all users
-- `GET /user?search=partOfName` to find users by name
-- `GET /user/:id` to fetch user by id
-- `GET /user/:id/:prop` to fetch property of concrete user
-- `PUT /user` to create new user
-- `POST /user/:id` to update user
-- `DELETE /user/:id` to delete user
+- `GET api/user` to get list of all users
+- `GET api/user?search=partOfName` to find users by name
+- `GET api/user/:id` to fetch user by id
+- `GET api/user/:id/:prop` to fetch property of concrete user
+- `POST api/user` to create new user
+- `PUT api/user/:id` to update user
+- `DELETE api/user/:id` to delete user
 
 Create in project root folder `api` for all api files. Create subfolder `user` for api-files related to users.
 
-## Users DB
+## Express App
 
-To simulate DB let's install [array-ql](https://www.npmjs.com/package/array-ql) package. Then create file `api/user/users-db.js`:
+Make app.js file in root of your project
 
 ```javascript
+const express = require("express");
+const bodyParser = require("body-parser");
+const bubbleServ = require("bubble-serv");
+const app = express();
+
+// POST data parsing
+app.use(bodyParser.json());
+
+app.use(
+  '/api',
+  bubbleServ({
+    apiRoot: "/api-files",
+    traceScriptResolving: false,
+    numerizeGetParams: true,
+    numerizePathParams: true,
+  })
+);
+
+// START server
+app.listen(3000, function () {
+  console.log(`listening http://localhost:3000`);
+});
+
+```
+
+## Users DB
+
+To simulate DB let's install [array-ql](https://www.npmjs.com/package/array-ql) package. Then create file `api-files/user/users-db.js`:
+
+```javascript
+/** Users DB simulation */
 const ArrayQL = require("array-ql");
 
 // sample db
@@ -40,7 +71,7 @@ module.exports = new ArrayQL(users, options);
 
 ## Read methods
 
-Create `api/user/index.get.js` file, it will be served for all `GET /user/...` requests
+Create `api-files/user/index.get.js` file, it will be served for all `GET api/user/...` requests
 
 ```javascript
 const UsersDB = require("./users-db");
@@ -48,28 +79,29 @@ const UsersDB = require("./users-db");
 module.exports = function ({ queryParams, pathParams }) {
   const [id, prop] = pathParams;
 
-  // if id given (/user/:id), then one record requested
+  // if id given (api/user/:id), then one record requested
   if (id !== undefined) {
     // UsersDB drops exception if user will not be found
     const user = UsersDB.getById(id);
 
-    // if prop given (/user/:id/:prop) return just particular prop
+    // if prop given (api/user/:id/:prop) return just particular prop
     // Have to encode strings as a JSON
     return prop ? JSON.stringify(user[prop]) : user;
   }
 
-  // no "id" and "prop" given, then list is requested (/user)
+  // no "id" and "prop" given, then list is requested (api/user)
   // if queryParams.search is undefined
   // complete list will be returned
   return UsersDB.select().where("lastName").like(queryParams.search).getList();  
 };
 ```
 
-## PUT /user
+## POST api/user
 
-Create `api/user/index.put.js` file:
+Create `api-files/user/index.post.js` file:
 
 ```javascript
+/** user creation */
 const UsersDB = require("./users-db");
 
 module.exports = function ({ bodyParams }) {
@@ -77,11 +109,12 @@ module.exports = function ({ bodyParams }) {
 };
 ```
 
-## POST /user/:id
+## PUT api/user/:id
 
-Create `api/user/index.post.js` file:
+Create `api-files/user/index.put.js` file:
 
 ```javascript
+/** user update */
 const UsersDB = require("./users-db");
 
 module.exports = function ({ pathParams, bodyParams }) {
@@ -92,11 +125,12 @@ module.exports = function ({ pathParams, bodyParams }) {
 };
 ```
 
-## DELETE /user/:id
+## DELETE api/user/:id
 
-Create `api/user/index.delete.js` file:
+Create `api-files/user/index.delete.js` file:
 
 ```javascript
+/** user remove */
 const UsersDB = require("./users-db");
 
 module.exports = function ({ pathParams }) {

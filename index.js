@@ -4,27 +4,28 @@
  * {urlParams, bodyParams, pathParams}
  */
 const url = require("url");
+const path = require("path");
 const chalk = require("chalk");
+const appRoot = require('app-root-path');
 const numerize = require("./utils/numerize");
 
-const ProjRoot = process.cwd() + "/";
 // const setCorsHeaders = require("./utils/set-cors-headers");
 const resolvePath = require("./utils/resolve-path");
 
-function JservFactory(options){
+function BservFactory(options){
 	options = Object.assign({
 		numerizeGetParams: false,
 		numerizePathParams: false,
 		traceLabel: "BUBBLE SERV",
 		traceScriptResolving: false,
-		apiRoot: "./", // relative to project root for API files
+		apiRoot: "/", // relative to project root for API files
 		extractPath: null,
 		mapError: null, // format error
 		mapResult: null, // format response
 	}, options);
 
 	const apiRoot    = options.apiRoot;
-	const apiAbsRoot = ProjRoot + options.apiRoot;
+	const apiAbsRoot = path.resolve(appRoot + options.apiRoot);
 
 
 	return function(req, res, next){
@@ -91,6 +92,6 @@ function _extractPath(req){
 
 
 
-module.exports = JservFactory;
+module.exports = BservFactory;
 
 

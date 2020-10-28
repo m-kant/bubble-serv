@@ -7,7 +7,7 @@ Just put `authorized.json` file into `user/` folder, and you will get `user/auth
 ## Installation
 
 ```Bash
-npm install bubble-serv chalk
+npm install bubble-serv
 ```
 
 ## Usage

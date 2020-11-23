@@ -1,6 +1,6 @@
 # bubble-serv
 
-Express middleware for fast prototyping JSON server (JSON-based REST api). Mainly intended for mock servers, tests, prototypes.
+Express middleware for extremely fast and simple prototyping JSON server (JSON-based REST api). Mainly intended for mock servers, tests, prototypes.
 
 Just put `authorized.json` file into `user/` folder, and you will get `user/authorized` method in your API, wich returns content of file. Add `authorized.post.json` for separate response on POST request. You can use `.js` instead of `.json` for more complex response, in case you want to take into consideration query params, body content or path params.
 
